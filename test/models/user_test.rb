@@ -36,4 +36,10 @@ class UserTest < ActiveSupport::TestCase
 
     assert_equal user.errors[:password], ["Change 11 characters of 's password"]
   end
+
+  test 'should save with valid password' do
+    user = User.create(password: 'Abcdef123456', name: 'Viral')
+
+    assert_equal user.persisted?, true
+  end
 end
