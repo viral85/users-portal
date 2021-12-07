@@ -1,6 +1,20 @@
+require 'csv'
 class User < ApplicationRecord
   validates :name, presence: true
   validate :validate_strong_password
+
+  def self.import(file)
+    return if file.content_type != 'text/csv'
+
+    result = []
+    CSV.foreach(file, headers: true) do |row|
+      user = User.create(row.to_hash)
+      if user.errors.present?
+        result << user.errors[:password]
+      end
+    end
+    result
+  end
 
   private
 

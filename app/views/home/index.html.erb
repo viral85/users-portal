@@ -1,0 +1,10 @@
+<%if @result.present? %>
+<% @result.each.with_index(0) do |row, index|%>
+  <%=index+1%> <%=row%><br>
+  <%end %>
+<% end %>
+
+<%= form_tag user_import_path, multipart: true, method: :post do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Import Csv" %>
+<% end %>
