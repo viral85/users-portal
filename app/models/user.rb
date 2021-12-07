@@ -10,7 +10,9 @@ class User < ApplicationRecord
     CSV.foreach(file, headers: true) do |row|
       user = User.create(row.to_hash)
       if user.errors.present?
-        result << user.errors[:password]
+        result << user.errors[:password].first
+      else
+        result << "#{user.name} was successfully saved"
       end
     end
     result
